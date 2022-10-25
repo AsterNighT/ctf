@@ -1,2 +1,0 @@
-2021-10-24 17:25:07,500 [WARNING] (MainProcess) PID:39740 <engine> Terminating process: Worker_00 (PID: 40120).
-2021-10-24 17:25:07,997 [INFO] (MainProcess) PID:39740 <zeromq_queue> Queue main_task_queue responder exiting.

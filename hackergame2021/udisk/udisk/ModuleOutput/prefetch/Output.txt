@@ -1,2 +1,0 @@
-Prefetch Directory is  C:\Users\klxjt\AppData\Local\Temp\Autopsy\udisk_20211024_172026\Temp\RecentActivity\1GHGGrmaMM0.img-prefetch_0
-DB file is  F:\work\ctf\hackergame2021\udisk\udisk\ModuleOutput\prefetch\1GHGGrmaMM0.img-Autopsy_PF_DB.db3

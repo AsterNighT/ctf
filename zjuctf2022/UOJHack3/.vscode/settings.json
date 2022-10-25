@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.lex": "lex",
+        "*.ir": "llvm",
+        "*.toml": "toml",
+        "*.sage": "python",
+        "sstream": "cpp",
+        "ostream": "cpp"
+    }
+}
