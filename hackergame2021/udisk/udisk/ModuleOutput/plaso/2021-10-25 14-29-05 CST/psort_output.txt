@@ -1,0 +1,8 @@
+Processing completed.
+
+******************************** Export results ********************************
+   Events MACB grouped : 3
+      Events processed : 3
+       Events filtered : 0
+Events from time slice : 0
+--------------------------------------------------------------------------------

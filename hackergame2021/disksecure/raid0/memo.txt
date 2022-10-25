@@ -1,0 +1,72 @@
+0.img: must be first, gpt
+2a000: a python file, flag.py
+2b000: a rust file
+2c000: a python file
+2d000: a python file
+30000-40000: some file names
+8c0000: kind of network log, A 491 - 835
+8d0000: another network log LENGTH 861-883
+8def9f  some digit logs,  0000007588-0000189648
+8e5000: a c file
+8f0000: a python file
+
+1.img
+8c06e7: some network log LENGTH 930-1305
+8d0003: continued??? A 1305-1808 obj 1032
+c08000-c17500: a dockerfile and some kind of script
+
+2.img
+61b00b: some django setting
+8c0000-8dffb0: logs 1809-2820
+.img
+80473c-806aa4: file names
+8c0000-8de8e1:logs 2851-3699  # strip size seems to be 20000 which is 128kB
+
+4.img
+8c14e6 logs LENGTH 3701-3738
+8df881-8dffed digitlogs 0000007729-0000470796
+
+5.img
+8a1000: some makefile and c file
+8ae01e: logs A 61-750 LENGTH 5-765
+
+6.img
+8c0007: digitlogs 0000076368-0000200424
+8c3603: LENGTH 5-842
+
+7.img not the last one, but last of xref
+409004: pytorch
+4126b8: filenames
+8c0001: digit logs 0000470505-0000137602-0000636865
+    LENGTH5-310
+
+
+about the pdf
+8c0000
+0: not start 
+1: some stream
+2: 
+3: "iveness_under_low-memory_conditions)"
+4:stream
+5:stream
+6:xref
+7:xref
+
+
+
+0.img:  8def94 xref
+
+5.img:  8ae000 %PDF-1.3
+6.img:  8c36a8 %%EOF
+6.img:  8c4000 %PDF-1.3
+7.img:  8d1d30 %%EOF
+7.img:  8d2000 %PDF-1.3
+4.img:  8df875 xref
+
+0.img:  8e057c xref
+0.img:  8e4268 %%EOF
+
+ends
+008c0546: 7472 6561 6d0a 656e 646f 626a 0a33 3130 2030 206f 626a 0a32 3631 390a 656e  tream.endobj.310 0 obj.2619.en
+008c0564: 646f 626a 0a33 3139 2030 206f 626a 0a3c 3c20 2f4c 656e 6774 6820 3332 3020  dobj.319 0 obj.<< /Length 320
+008c0582: 3020 5220 2f54 7970 6520 2f58 4f62 6a65 6374 202f 5375 6274 7970 6520 2f49  0 R /Type /XObject /Subtype /I

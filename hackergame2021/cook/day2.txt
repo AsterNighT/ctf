@@ -1,0 +1,7 @@
+right 1
+pi 1000
+down 1
+left 1
+di 1
+ifu 0 1
+

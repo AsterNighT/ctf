@@ -1,0 +1,41 @@
+*
+
+# path
+!*/
+
+# code files
+!*.cc
+!*.h
+!*.hpp
+!*.c
+!*.cpp
+!*.py
+!*.sage
+!*.js
+!*.ts
+!*.cjs
+!*.rs
+!*.go
+
+# config files
+!*.toml
+!*.json
+!*.yaml
+!*.cfg
+!*.conf
+!Makefile
+
+# documents
+!*.md
+!*.txt
+!*.csv
+!*.doc
+!*.docx
+!*.pdf
+
+# scripts
+!*.bat
+!*.sh
+
+# other
+!.gitignore
