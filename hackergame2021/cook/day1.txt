@@ -1,0 +1,11 @@
+right 2
+pi 1
+left 2
+down 1
+di 1
+left 1
+up 1
+pi 1
+down 1
+left 1
+di 1

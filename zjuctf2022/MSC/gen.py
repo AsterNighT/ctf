@@ -26,7 +26,11 @@ def getRow():
         s = next(gs)
         rng.setstate(s)
 #         print(s[1][0])
-        row = vector(GF(2), [rng.getrandbits(1) for j in range(length)])
+        randoms = [rng.getrandbits(8) for i in range(length//8)]
+        row_num = []
+        for x in randoms:
+            row_num += [int(b) for b in bin(x)[2:].zfill(8)]
+        row = vector(GF(2), row_num)
         yield row
 
 
@@ -41,13 +45,16 @@ def buildBox():
 def test():
     prng = Random()
     originState = prng.getstate()
-    # 这里都是用的MSB,如果采用不同的二进制位(如LSB)最后的矩阵T 也会不同
-    leak = vector(GF(2), [prng.getrandbits(1) for i in range(length)])
+    randoms = [prng.getrandbits(8) for i in range(length//8)]
+    row_num = []
+    for x in randoms:
+        row_num += [int(b) for b in bin(x)[2:].zfill(8)]
+    leak = vector(GF(2), row_num)
     b = buildBox()
     f = open("Matrix", "w")
     for i in range(b.nrows()):
         for j in range(b.ncols()):
-            f.write(str(b[i, j])+"n")
+            f.write(str(b[i, j]))
     f.close()
     x = b.solve_left(leak)
     x = ''.join([str(i) for i in x])

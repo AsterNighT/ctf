@@ -1,0 +1,17 @@
+
+Scalpel version 1.60 audit file
+Started at Sun Oct 24 17:01:47 2021
+Command line:
+scalpel day1_unlock.img -o recover1 
+
+Output directory: /mnt/f/work/ctf/hackergame2021/udisk/recover1
+Configuration file: /etc/scalpel/scalpel.conf
+
+Opening target "H="
+
+The following files were carved:
+File		  Start			Chop		Length		Extracted From
+00000000.tif      2745431		YES          400298		day1_unlock.img
+
+
+Completed at Sun Oct 24 17:01:47 2021

@@ -1,17 +1,22 @@
 from sage.all import *
 from random import Random
 from tqdm import tqdm
+from Crypto.Util.strxor import strxor
 # 根据文件中的信息，构造矩阵
+
+length = 19968
 
 
 def buildMatrix():
     length = 19968
     cnt = 0
     m = matrix(GF(2), length, length)
-    for line in tqdm(open("Matrix", "r")):
+    file = open("Matrix", "r")
+    for i in tqdm(range(length*length)):
+        num = int(file.read(1))
         row = cnt // 19968
         col = cnt % 19968
-        m[row, col] = int(line.strip('n'))
+        m[row, col] = num
         cnt += 1
     return m
 
@@ -19,7 +24,17 @@ def buildMatrix():
 m = buildMatrix()
 
 
+def read_data():
+    data = []
+    file = open("data_extracted.bin", "rb")
+    for i in range(length//8):
+        x = file.read(1)
+        data += [int(b) for b in bin(int.from_bytes(x,'little'))[2:].zfill(8)]
+    return data
+
 # X = Z*(T^-1)
+
+
 def recoverState(leak):
     x = m.solve_left(leak)
     x = ''.join([str(i) for i in x])
@@ -27,7 +42,7 @@ def recoverState(leak):
     for i in range(624):
         tmp = int(x[i * 32:(i + 1) * 32], 2)
         state.append(tmp)
-    return state
+    return (3, tuple(state+[0]), None)
 
 
 # 根据题型2,还原state,有两种可能,这时候可以用暴破
@@ -70,45 +85,21 @@ def pwn(leak):
         return prng
 
 
-def test():
-    length = 19968
+def run():
     prng = Random()
-    originState = prng.getstate()
-    leak = vector(GF(2), [prng.getrandbits(1) for i in range(length)])
+    data = read_data()
+    leak = vector(GF(2), data)
     # 恢复state
     state = recoverState(leak)
-    prng.setstate(originState)
-    prng.getrandbits(1)
-    originState = [x for x in prng.getstate()[1][:-1]]
-    # 成功恢复623个state
-    print(originState[1:] == state[1:])
-    # 获取泄露信息
-    L = [leak[i] for i in range(100)]
-    # 两种可能
-    guess1, guess2 = backfirst(state)
-    print(guess1, guess2)
-    state[0] = guess1
-    s = state
-    prng.setstate((3, tuple(s + [0]), None))
-    g1 = [prng.getrandbits(1) for i in range(100)]
-    if g1 == L:
-        print("first")
-        prng.setstate((3, tuple(s + [0]), None))
-        now = vector(GF(2), [prng.getrandbits(1) for i in range(length)])
-        if now == leak:
-            print("true")
-            return
-    state[0] = guess2
-    s = state
-    prng.setstate((3, tuple(s + [0]), None))
-    g2 = [prng.getrandbits(1) for i in range(100)]
-    if g2 == L:
-        print("second")
-        prng.setstate((3, tuple(s + [0]), None))
-        now = vector(GF(2), [prng.getrandbits(1) for i in range(length)])
-        if now == leak:
-            print("true")
-            return
+    prng.setstate(state)
+    for i in range(28*89):
+        prng.getrandbits(8)
+    key = b''
+    file = open("flag.bin", "rb")
+    data = file.read(28)
+    for i in range(28):
+        key += bytes([prng.getrandbits(8)])
+    print(strxor(key, data))
 
 
-test()
+run()

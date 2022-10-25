@@ -1,0 +1,5 @@
+{"data":{"__schema":{"types":[{"name":"Query"},{"name":"GNote"},{"name":"Int"},{"name":"String"},{"name":"GUser"},{"name":"Boolean"},{"name":"__Schema"},{"name":"__Type"},{"name":"__TypeKind"},{"name":"__Field"},{"name":"__InputValue"},{"name":"__EnumValue"},{"name":"__Directive"},{"name":"__DirectiveLocation"}]}}}
+
+{"data":{"__type":{"name":"Query","fields":[{"name":"note","type":{"name":"GNote","kind":"OBJECT","ofType":null}},{"name":"notes","type":{"name":null,"kind":"LIST","ofType":{"name":"GNote","kind":"OBJECT"}}},{"name":"user","type":{"name":"GUser","kind":"OBJECT","ofType":null}}]}}}
+
+{"data":{"__type":{"name":"GUser","fields":[{"name":"id","type":{"name":"Int","kind":"SCALAR","ofType":null}},{"name":"username","type":{"name":"String","kind":"SCALAR","ofType":null}},{"name":"privateEmail","type":{"name":"String","kind":"SCALAR","ofType":null}}]}}}

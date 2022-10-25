@@ -1,0 +1,10 @@
+
+Source path	: F:\work\ctf\hackergame2021\udisk\day1_unlock.img
+Source type	: storage media image
+Processing time	: 00:00:00
+
+Processing started.
+Worker_00 (PID: 40120) - events produced: 8 - file: TSK:/随机过程.txt - running: True
+Worker_01 (PID: 12156) - events produced: 0 - file:  - running: True
+Processing completed.
+

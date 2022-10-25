@@ -1,6 +1,6 @@
 import os
 import random
-flag='good'
+情报 = "Good!"
 
 random.seed(os.urandom(64))
 
@@ -8,9 +8,9 @@ random.seed(os.urandom(64))
 石头剪刀布映射 = ["石头", "剪刀", "布"]
 
 def 石头剪刀布():
-    随机数 = random.getrandbits(32) # 3a*b
+    随机数 = random.getrandbits(32) # x = 3a+b
     猜拳 = 石头剪刀布映射[随机数 % 3] # b
-    轮标识符 = (随机数 // 3) ^ (随机数 % 3) #a^b
+    轮标识符 = (随机数 // 3) ^ (随机数 % 3) # id = a^b
     return hex(轮标识符)[2:].zfill(5), 猜拳
 
 def 检查(猜拳, 输入):

@@ -1,0 +1,11 @@
+input -> str
+len(str) = 30
+
+correct_data_return = 'ubr6_0I7n8t1e9n1te?2!4}5'
+
+str1 = str[0:18]
+str3 = enc.func(str1)
+str1 = str[18:30]
+
+assert(str3 == 'cDgmIZ5xitoh6IhNALRTsH8iMqRfg3oEvX1N5YuniPY=')
+assert(enc.encode(str1, MD5('zjuctf')) == 'ubr6_0I7n8t1e9n1te?2!4}5')
